@@ -19,12 +19,13 @@ for week in weeks:
     for row in cr:
         # gets one messed up row, oops
         if len(row) == 5 and row[4].rsplit('/', 1)[-1] not in song_data:
+            print(row)
             song_data[row[4].rsplit('/', 1)[-1]] = [row[1], row[2]]
     print("Finished with {} to {}".format(start, end))
 
 print("Writing to CSV")
 with open('top_songs.csv', 'w') as csvfile:
     writer = csv.writer(csvfile)
-    writer.writerow(["Artist", "Title", "Spotify URL"])
+    writer.writerow(["Artist", "Title", "Spotify ID"])
     for song in song_data:
         writer.writerow([song_data[song][1], song_data[song][0], song])

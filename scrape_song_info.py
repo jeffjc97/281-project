@@ -18,8 +18,8 @@ with open('top_songs.csv', 'r') as csvfile:
     
     for batch_index, batch_ids in enumerate(batches):
         print("Working on batch {:02d} of {:02d}".format(
-            batch_index + 1, N_BATCHES)
-        )
+            batch_index + 1, N_BATCHES
+        ))
         song_info = list(zip(
             CLIENT.tracks(tracks=batch_ids)['tracks'], 
             CLIENT.audio_features(tracks=batch_ids)

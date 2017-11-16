@@ -22,7 +22,8 @@ def get_weeks(start, end):
     return weeks
 
 def ssl_request(url):
-    return urllib.request.urlopen(url, context=ssl.SSLContext())
+	print(url)
+	return urllib.request.urlopen(url, context=ssl.SSLContext())
 
 def get_client():
 	creds = SpotifyClientCredentials(CLIENT_ID, CLIENT_SECRET)
