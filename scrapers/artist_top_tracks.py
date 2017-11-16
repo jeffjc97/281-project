@@ -4,7 +4,7 @@ from utils import get_client
 CLIENT = get_client()
 
 # artists should be a dictionary from ids to names
-def scrape_artists(artists, file_name):
+def scrape_top_tracks(artists, file_name):
 	artist_ids = set(artists.keys())
 	print("Retrieving songs for {} unique artists...".format(len(artists)))
 

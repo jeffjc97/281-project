@@ -4,7 +4,7 @@ from utils import get_client
 BATCH_SIZE = 50
 CLIENT = get_client()
 
-def scrape_songs(song_ids, file_name):
+def scrape_song_data(song_ids, file_name):
 	N_BATCHES = int((len(song_ids) + BATCH_SIZE - 1) / BATCH_SIZE)
 	batches = [
 		song_ids[BATCH_SIZE * i:BATCH_SIZE * (i + 1)]

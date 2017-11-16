@@ -5,7 +5,7 @@ song_id_re = re.compile('^[0-9a-zA-Z]{22}$')
 
 GLOBAL_WEEKLY_URL = 'http://spotifycharts.com/regional/global/weekly/{}--{}/download'
 
-def scrape_charts(start, end, file_name):
+def scrape_top_charts(start, end, file_name):
 	weeks = get_weeks(start, end)
 	print("Retrieving global song data for {} weeks...".format(len(weeks)))
 
