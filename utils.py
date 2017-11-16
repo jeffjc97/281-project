@@ -22,7 +22,6 @@ def get_weeks(start, end):
     return weeks
 
 def ssl_request(url):
-	print(url)
 	return urllib.request.urlopen(url, context=ssl.SSLContext())
 
 def get_client():
