@@ -7,8 +7,7 @@ from scrapers.song_info import scrape_songs
 
 scrape_charts(
 	datetime.datetime(2016, 12, 30), 
-	# datetime.datetime(2017, 11, 3),
-	datetime.datetime(2016, 12, 30), 
+	datetime.datetime(2017, 11, 3),
 	"data/top_songs.csv"
 )
 
@@ -25,3 +24,6 @@ with open("data/song_features.csv", "r") as csvfile:
 		song[1]: song[2] for song in songs
 	}
 	scrape_artists(artists, "data/artist_songs.csv")
+
+# with open("data/artist_songs.csv"), "r") as csvfile:
+# 	reader = csv.reader(csvfile)
