@@ -25,5 +25,8 @@ with open("data/song_features.csv", "r") as csvfile:
 	}
 	scrape_artists(artists, "data/artist_songs.csv")
 
-# with open("data/artist_songs.csv"), "r") as csvfile:
-# 	reader = csv.reader(csvfile)
+with open("data/artist_songs.csv"), "r") as csvfile:
+	reader = csv.reader(csvfile)
+	songs = list(reader)[1:]
+	song_ids = [song[2] for song in songs]
+	scrape_songs(song_ids, "data/song_features_large.csv")

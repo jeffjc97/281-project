@@ -1,5 +1,7 @@
-import csv, datetime
+import csv, datetime, re
 from utils import str_date, get_weeks, ssl_request
+
+song_id_re = re.compile('^[0-9a-zA-Z]{22}$')
 
 GLOBAL_WEEKLY_URL = 'http://spotifycharts.com/regional/global/weekly/{}--{}/download'
 
@@ -16,8 +18,12 @@ def scrape_charts(start, end, file_name):
 		next(cr, None)
 		for row in cr:
 			# gets one messed up row, oops
-			if len(row) == 5 and row[4].rsplit('/', 1)[-1] not in song_data:
-				song_data[row[4].rsplit('/', 1)[-1]] = [row[1], row[2]]
+			if len(row) != 5:
+				continue
+			song_id = row[4].rsplit('/', 1)[-1]
+			if song_id in song_data or song_id_re.match(song_id) is None:
+				continue
+			song_data[song_id] = [row[1], row[2]]
 		print("Finished with {} to {}".format(start, end))
 
 	print("Writing to CSV")
