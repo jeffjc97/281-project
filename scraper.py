@@ -6,30 +6,49 @@ from scrapers.artist_top_tracks import scrape_top_tracks
 from scrapers.spotify_charts import scrape_top_charts
 from scrapers.song_info import scrape_song_data
 
-# scrape_charts(
+TOP_CHARTS_SONGS = "data/top_songs.csv"
+TOP_CHARTS_SONG_FEATURES = "data/top_song_features.csv"
+TOP_CHARTS_ARTIST_SONGS = "data/top_artist_songs.csv"
+TOP_CHARTS_ARTIST_SONG_FEATURES = "data/top_artist_song_features.csv"
+
+ARTIST_LIST_5000 = "data/5000_artist_list.csv"
+ARTIST_LIST_5000_SONGS = "data/5000_artist_songs.csv"
+ARTIST_LIST_5000_SONG_FEATURES = "data/5000_artist_song_features.csv"
+
+# scrape_top_charts(
 # 	datetime.datetime(2016, 12, 30), 
 # 	datetime.datetime(2017, 11, 3),
-# 	"data/top_songs.csv"
+# 	TOP_CHARTS_SONGS
 # )
 
-# with open('data/top_songs.csv', 'r') as csvfile:
+# with open(TOP_CHARTS_SONGS, 'r') as csvfile:
 # 	reader = csv.reader(csvfile)
 # 	songs = list(reader)[1:]
 # 	song_ids = [song[2] for song in songs]
-# 	scrape_songs(song_ids, "data/song_features.csv")
+# 	scrape_song_data(song_ids, TOP_CHARTS_SONG_FEATURES)
 
-# with open("data/song_features.csv", "r") as csvfile:
+# with open(TOP_CHARTS_SONGS_FEATURES, "r") as csvfile:
 # 	reader = csv.reader(csvfile)
 # 	songs = list(reader)[1:]
 # 	artists = {
 # 		song[1]: song[2] for song in songs
 # 	}
-# 	scrape_artists(artists, "data/artist_songs.csv")
+# 	scrape_top_tracks(artists, TOP_CHARTS_ARTIST_SONGS)
 
-# with open("data/artist_songs.csv", "r") as csvfile:
+# with open(TOP_CHARTS_ARTIST_SONGS, "r") as csvfile:
 # 	reader = csv.reader(csvfile)
 # 	songs = list(reader)[1:]
 # 	song_ids = [song[2] for song in songs]
-# 	scrape_songs(song_ids, "data/song_features_large.csv")
+# 	scrape_song_data(song_ids, TOP_CHARTS_ARTIST_SONG_FEATURES)
 
-scrape_artist_list("data/artist_list.csv", limit=1000)
+# scrape_artist_list(ARTIST_LIST_5000, limit=5000)
+
+# with open(ARTIST_LIST_5000, "r") as csvfile:
+# 	reader = csv.reader(csvfile); next(reader, None)
+# 	artists = { row[0]: row[1] for row in reader }
+# 	scrape_top_tracks(artists, ARTIST_LIST_5000_SONGS)
+
+# with open(ARTIST_LIST_5000_SONGS, "r") as csvfile:
+# 	reader = csv.reader(csvfile); next(reader, None)
+# 	song_ids = [ row[2] for row in reader ]
+# 	scrape_song_data(song_ids, ARTIST_LIST_5000_SONG_FEATURES)
