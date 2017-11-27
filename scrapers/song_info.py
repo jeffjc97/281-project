@@ -1,4 +1,4 @@
-import csv
+import csv, datetime
 from utils import get_client
 
 BATCH_SIZE = 50
@@ -9,7 +9,6 @@ SIMPLE_HEADERS = [
 	'artist_id',
 	'duration',
 	'popularity',
-	'artist_popularity',
 	'explicit',
 	'danceability',
 	'energy',
@@ -23,6 +22,10 @@ SIMPLE_HEADERS = [
 	'time_signature',
 	'mode',
 	'key',
+	'track_number',
+	'artist_popularity',
+	'album_length',
+	'release_date',
 ]
 ANALYSIS_HEADERS = [
 	'end_of_fade_in',
@@ -40,6 +43,19 @@ ANALYSIS_HEADERS = [
 HEADERS = SIMPLE_HEADERS + ANALYSIS_HEADERS
 def _get_values(dict):
 	return list(map(lambda h: dict[h], HEADERS))
+
+albums = {}
+def _get_album(album_id):
+	if album_id in albums:
+		return albums[album_id]
+	album = CLIENT.album(album_id)
+	date = album['release_date'].split("-")
+	year, month, day = int(date[0]) - 1990, int(date[1]), int(date[2])
+	albums[album_id] = {
+		'album_length': len(album['tracks']['items']),
+		'release_date': year * 365 + month * 30 + day
+	}
+	return albums[album_id]
 
 artist_popularities = {}
 def _get_popularity(artist_id):
@@ -66,22 +82,24 @@ def _get_analysis(analysis_url):
 	}
 
 def _handle(batch_ids, writer):
+	# get a new SSL connection once in a while
+	CLIENT = get_client()
 	song_info = list(zip(
 		CLIENT.tracks(tracks=batch_ids)['tracks'], 
 		CLIENT.audio_features(tracks=batch_ids)
 	))
+
+	written = 0
 	for song in song_info:
 		data = {
 			'song_id': song[0]['id'],
 			'artist_id': song[0]['artists'][0]['id'],
 			'duration': song[0]['duration_ms'],
-			'explicit': int(song[0]['explicit']),
 			'popularity': song[0]['popularity'],
+			'explicit': int(song[0]['explicit']),
 			'danceability': song[1]['danceability'],
 			'energy': song[1]['energy'],
-			'key': song[1]['key'],
 			'loudness': song[1]['loudness'],
-			'mode': song[1]['mode'],
 			'speechiness': song[1]['speechiness'],
 			'acousticness': song[1]['acousticness'],
 			'instrumentalness': song[1]['instrumentalness'],
@@ -89,11 +107,23 @@ def _handle(batch_ids, writer):
 			'valence': song[1]['valence'],
 			'tempo': song[1]['tempo'],
 			'time_signature': song[1]['time_signature'],
+			'mode': song[1]['mode'],
+			'key': song[1]['key'],
+			'track_number': song[0]['track_number'],
 		}
 		data['artist_popularity'] = _get_popularity(song[0]['artists'][0]['id'])
+		
+		album_data = _get_album(song[0]['album']['id'])
 		analytics = _get_analysis(song[0]['id'])
-		data = {**data, **analytics}
+		data = {**data, **album_data, **analytics}
+		
 		writer.writerow(_get_values(data))
+		print("Wrote data for song {}/{}: {}".format(
+			written + 1,
+			len(song_info), 
+			song[0]['name']
+		))
+		written += 1
 
 def scrape_song_data(song_ids, file_name):
 	N_BATCHES = int((len(song_ids) + BATCH_SIZE - 1) / BATCH_SIZE)
