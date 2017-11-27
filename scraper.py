@@ -37,7 +37,7 @@ with open(BEST_SONGS, "r") as csvfile:
 	reader = csv.reader(csvfile)
 	songs = list(reader)[1:]
 	song_ids = [song[2] for song in songs]
-	scrape_song_data(song_ids[:1], BEST_SONG_FEATURES)
+	scrape_song_data(song_ids, BEST_SONG_FEATURES)
 
 ###########################################################################
 ### scrape data for random artists since 1990
