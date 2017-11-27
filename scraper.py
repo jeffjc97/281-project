@@ -17,14 +17,14 @@ RANDOM_SONG_FEATURES = "data/random_song_features.csv"
 ###########################################################################
 
 # top artists over the past year
-scrape_top_charts(
-	datetime.datetime(2016, 12, 30),
-	datetime.datetime(2017, 11, 3),
-	BEST_ARTISTS
-)
+# scrape_top_charts(
+# 	datetime.datetime(2016, 12, 30),
+# 	datetime.datetime(2017, 11, 3),
+# 	BEST_ARTISTS
+# )
 
 # get top artists' songs
-with open(TOP_CHARTS_ARTISTS, "r") as csvfile:
+with open(BEST_ARTISTS, "r") as csvfile:
 	reader = csv.reader(csvfile)
 	artists = list(reader)[1:]
 	artists = {
@@ -33,7 +33,7 @@ with open(TOP_CHARTS_ARTISTS, "r") as csvfile:
 	scrape_top_tracks(artists, BEST_SONGS)
 
 # get song data for all top songs
-with open(TOP_CHARTS_ARTIST_SONGS, "r") as csvfile:
+with open(BEST_SONGS, "r") as csvfile:
 	reader = csv.reader(csvfile)
 	songs = list(reader)[1:]
 	song_ids = [song[2] for song in songs]
