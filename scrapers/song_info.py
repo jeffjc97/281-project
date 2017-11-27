@@ -23,7 +23,6 @@ def scrape_song_data(song_ids, file_name):
 		for i, song in enumerate(song_info):
 			# just get main artist?
 			song_id = batch_ids[i]
-			print(song[0]['artists'])
 			all_features[song_id] = {
 				'song_id': song_id,
 				'artist_id': song[0]['artists'][0]['id'],
