@@ -43,17 +43,17 @@ RANDOM_SONG_FEATURES = "data/random_song_features.csv"
 ### scrape data for random artists since 1990
 ###########################################################################
 
-# # get random artists
-# scrape_artist_list(RANDOM_ARTISTS, limit=1000)
+# get random artists
+scrape_artist_list(RANDOM_ARTISTS, limit=5000)
 
-# # get random artists' songs
-# with open(RANDOM_ARTISTS, "r") as csvfile:
-# 	reader = csv.reader(csvfile); next(reader, None)
-# 	artists = { row[0]: row[1] for row in reader }
-# 	scrape_top_tracks(artists, RANDOM_SONGS)
-
-# get song data for all random songs
-with open(RANDOM_SONGS, "r") as csvfile:
+# get random artists' songs
+with open(RANDOM_ARTISTS, "r") as csvfile:
 	reader = csv.reader(csvfile); next(reader, None)
-	song_ids = [ row[2] for row in reader ]
-	scrape_song_data(song_ids, RANDOM_SONG_FEATURES)
+	artists = { row[0]: row[1] for row in reader }
+	scrape_top_tracks(artists, RANDOM_SONGS)
+
+# # get song data for all random songs
+# with open(RANDOM_SONGS, "r") as csvfile:
+# 	reader = csv.reader(csvfile); next(reader, None)
+# 	song_ids = [ row[2] for row in reader ]
+# 	scrape_song_data(song_ids, RANDOM_SONG_FEATURES)
