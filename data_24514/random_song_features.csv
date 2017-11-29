@@ -1,0 +1,2 @@
+song_id,artist_id,duration,popularity,explicit,danceability,energy,loudness,speechiness,acousticness,instrumentalness,liveness,valence,tempo,time_signature,mode,key,track_number,artist_popularity,album_length,release_date,end_of_fade_in,start_of_fade_out,tempo_confidence,time_signature_confidence,mode_confidence,key_confidence,num_bars,num_beats,num_tatums,num_sections,num_segments
+

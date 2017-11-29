@@ -1,4 +1,5 @@
-import csv, datetime, dill, requests, time
+import csv, datetime, json, requests, time
+import spotipy
 from utils import get_client
 from multiprocessing import Pool
 
@@ -68,6 +69,8 @@ def _get_popularity(client, artist_id):
 
 def _get_analysis(client, analysis_url):
 	analysis = client.audio_analysis(analysis_url)
+	if analysis is None:
+		return None
 	return {
 		'end_of_fade_in': 				analysis['track']['end_of_fade_in'],
 		'start_of_fade_out': 			analysis['track']['start_of_fade_out'],
@@ -110,11 +113,28 @@ def handle_song(song):
 		data['artist_popularity'] = _get_popularity(client, song[0]['artists'][0]['id'])
 		album_data = _get_album(client, song[0]['album']['id'])
 		analytics = _get_analysis(client, song[0]['id'])
+		if analytics is None:
+			return None
 		data = {**data, **album_data, **analytics}
 		print("Got data for song {}".format(song[0]['name']))
 		return data
 	except requests.exceptions.SSLError:
 		print("SSL Error!")
+		return None
+	except requests.exceptions.ConnectionError:
+		print("Connection Error!")
+		return None
+	except spotipy.oauth2.SpotifyOauthError:
+		print("OAuth Error!")
+		return None
+	except json.decoder.JSONDecodeError:
+		print("JSON Error!")
+		return None
+	except requests.exceptions.HTTPError:
+		print("URL Not Found!")
+		return None
+	except spotipy.client.SpotifyException:
+		print("Analysis Not Found!")
 		return None
 
 def scrape_song_data(song_ids, file_name):
