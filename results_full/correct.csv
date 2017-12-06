@@ -1,0 +1,12 @@
+Model,Unpopular % Correct,Popular % Correct,Overall % Correct
+aboost-20,0.865,0.774,0.832
+gboost-20,0.928,0.634,0.822
+extrat-100,0.905,0.711,0.835
+bagger-100,0.904,0.712,0.835
+forest-100,0.901,0.711,0.833
+bayesian,0.917,0.662,0.825
+elastic,0.920,0.652,0.824
+lasso,0.921,0.653,0.824
+linear,0.917,0.660,0.824
+linSVR,0.427,0.940,0.612
+mlp,0.926,0.527,0.782
