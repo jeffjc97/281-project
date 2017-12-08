@@ -1,0 +1,5 @@
+Model,Training Time (s)
+mlp,2.02
+linSVR,9.24
+elastic,1.67
+lasso,1.65
